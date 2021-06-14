@@ -1,0 +1,87 @@
+<html>
+ <head>
+  <title>Trippy Square 2</title>
+ </head>
+ <body>
+  <canvas id="can" width="900px" height="900px"></canvas>
+  <script>
+var can = document.getElementById("can");
+var ctx = can.getContext('2d');
+var neg = -1;
+var sideLength = 19;
+var halfLength = Math.floor(sideLength/2);
+var boxWidth = can.width/sideLength;
+
+for(var i=0; i<sideLength; i++){
+  for(var e=0; e<sideLength; e++){
+  	var x1 = e*boxWidth;
+    var y1 = i*boxWidth;
+    var x2 = e*boxWidth;
+    var y2 = i*boxWidth;
+    neg*=-1;
+    
+    if((e<halfLength && i<halfLength)||(e>halfLength && i>halfLength)){
+      x1 += 0.15*boxWidth;
+      x2 += 0.85*boxWidth;
+      y1 += 0.85*boxWidth;
+      y2 += 0.15*boxWidth;
+    } else if((e>halfLength && i<halfLength)||(e<halfLength && i>halfLength)){
+      x1 += 0.15*boxWidth;
+      x2 += 0.85*boxWidth;
+      y1 += 0.15*boxWidth;
+      y2 += 0.85*boxWidth;
+    } else if(e==halfLength && i!=halfLength){
+      if(i<halfLength){
+        x1 += 0.15*boxWidth;
+        x2 += 0.85*boxWidth;
+        y1 += 0.85*boxWidth;
+        y2 += 0.85*boxWidth;
+      } else {
+        x1 += 0.15*boxWidth;
+        x2 += 0.85*boxWidth;
+        y1 += 0.15*boxWidth;
+        y2 += 0.15*boxWidth;
+      }
+    } else if(i==halfLength && e!=halfLength){
+      if(e<halfLength){
+        x1 += 0.85*boxWidth;
+        x2 += 0.85*boxWidth;
+        y1 += 0.15*boxWidth;
+        y2 += 0.85*boxWidth;
+      } else {
+        x1 += 0.15*boxWidth;
+        x2 += 0.15*boxWidth;
+        y1 += 0.15*boxWidth;
+        y2 += 0.85*boxWidth;
+      }
+    } else {
+      x1=-boxWidth;
+      x2=-boxWidth;
+      y1=-boxWidth;
+      y2=-boxWidth;
+    }
+    
+    if(neg == -1)
+    	ctx.fillStyle = "#000000";
+    else
+    	ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(e*boxWidth,i*boxWidth,boxWidth,boxWidth);
+    circle(x1,y1,neg);
+    circle(x2,y2,neg);
+  }
+}
+
+function circle(x,y,n){
+  if(n==-1)
+  	ctx.fillStyle = "#FFFFFF";
+  else
+  	ctx.fillStyle = "#000000";
+    
+  ctx.beginPath();
+  ctx.arc(x,y,boxWidth/8,0,2*Math.PI);
+  ctx.closePath();
+  ctx.fill();
+}
+  </script>
+ </body>
+</html>

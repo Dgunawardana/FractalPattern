@@ -1,0 +1,62 @@
+<html>
+ <head>
+  <title>Trippy Square 3</title>
+ </head>
+ <body>
+  <canvas id="can" width="800px" height="800px"></canvas>
+  <script>
+var can = document.getElementById("can");
+var ctx = can.getContext('2d');
+
+var n = 16;
+var scr = -1;
+var dir = 1;
+
+function draw(half,dif,offset){
+	ctx.clearRect(offset,offset,2*half,2*half);
+  for(var e=0; e<4; e++){
+  	ctx.clearRect(offset+half*(e%2),offset+half*Math.floor(e/2),half,half);
+  	var clr = -1;
+    if(e%2==1){
+    	scr*=-1;
+    }else if(e==2){
+    	dir*=-1;
+    }
+    for(var i=-1; i<n+1; i++){
+      clr*=-1;
+      ctx.beginPath();
+	  var r = 1;//(n+1)/n;
+	  var minX = half*(e%2)+offset; 
+	  var minY = half*Math.floor(e/2)+offset;
+	  
+      if(scr==-1){
+        var x = minX+(((half*i)/n+dir*dif)%(r*half)+(r*half))%(r*half)-0*half/n;
+	    ctx.rect(x,minY,half/n,half);
+      }else{
+        var y = minY+(((half*i)/n+dir*dif)%half+half)%half;
+        ctx.rect(minX,y,half,half/n);
+      }
+      if(clr==-1)
+        ctx.fillStyle="#000000";
+      else
+        ctx.fillStyle="#FFFFFF";
+      ctx.fill();
+    }
+  }
+}
+
+var d = 0;
+var int = setInterval(function(){
+  dir=1;
+  draw(400,d,0);
+  draw(200,d,200);
+  draw(100,d,300);
+  draw(50,d,350);
+  /*var bor = 10;
+  for(var u=400; u>=bor; u-=bor)
+	draw(u,d,400-u);*/
+  d++;
+},32);
+  </script>
+ </body>
+</html>

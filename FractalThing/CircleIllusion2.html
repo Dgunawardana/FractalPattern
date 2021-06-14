@@ -1,0 +1,64 @@
+<html>
+ <head>
+  <title>Trippy Circle 2</title>
+ </head>
+ <body>
+  <canvas id="can" width="1000px" height="1000px"></canvas>
+  <script>
+var can = document.getElementById("can");
+var ctx = can.getContext('2d');
+
+var bw = 1;
+var alt = 1;
+var x = 500;
+var y = 500;
+var N = 20;
+var inc = 40;
+
+function draw(t){
+  ctx.clearRect(0,0,1000,1000);
+  ctx.fillStyle = "#CCCCCC";
+  ctx.fillRect(0,0,1000,1000);
+  ctx.fillStyle = "#FF0000";
+  ctx.beginPath();
+  ctx.arc(x,y,10,0,2*Math.PI);
+  ctx.closePath();  
+  ctx.fill();
+  
+  var n = N;
+  for(var e=80; e<=800-inc; e+=inc){
+  	alt*=-1;
+    var r2 = e;
+    var r1 = e-inc;
+    n+=4;
+    /*ctx.moveTo(x+r1,y);
+    ctx.arc(x,y,r1,0,2*Math.PI);
+    ctx.stroke();*/
+    for(var i=0; i<n; i++){
+      bw*=-1;
+      var ang = (2*Math.PI*i)/n + t*alt;
+      var nex = (2*Math.PI*(i+alt))/n + t*alt;
+      var mid = (r1+r2)/2;
+      ctx.beginPath();
+      ctx.moveTo(x+r1*Math.cos(ang),y+r1*Math.sin(ang));
+      ctx.quadraticCurveTo(x+mid*Math.cos(nex),y+mid*Math.sin(nex),x+r2*Math.cos(ang),y+r2*Math.sin(ang));
+      ctx.lineTo(x+r2*Math.cos(ang),y+r2*Math.sin(ang));
+      ctx.lineTo(x+mid*Math.cos(nex),y+mid*Math.sin(nex));
+      ctx.closePath();
+      if(bw == -1){
+      	ctx.fillStyle = "#FFFFFF";
+        ctx.fill();
+      } else {
+      	ctx.fillStyle = "#000000";
+        ctx.fill();
+      }
+    }
+  }
+}
+var T = 0;
+var int = setInterval(function(){draw(T); T+=0.025;},10);
+//var count = 0;
+//var int = setInterval(function(){T++; count+=(T%(2*60)-60)/1000; draw(count);},10);
+  </script>
+ </body>
+</html>

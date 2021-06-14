@@ -1,0 +1,70 @@
+<html>
+ <head>
+  <title>Trippy Circle</title>
+ </head>
+ <body>
+  <canvas id="can" width="1000px" height="1000px"></canvas>
+  <script>
+  
+var can = document.getElementById("can");
+var ctx = can.getContext('2d');
+
+var x = 500;
+var y = 500;
+var width = 4;
+var rMax = x/2;
+var color = "white";
+
+ctx.fillStyle = color;
+var r = rMax;
+
+function SmInc(int){
+	var period = (int*Math.PI)/(2*width);
+  return 2*width*(1/Math.PI)*Math.asin(Math.cos(period));
+}
+
+function zoomIn() {
+	r = rMax-inc%(2*width);
+	color = "white";
+  while (r > 0) {
+    if (color == "white")
+      color = "black";
+    else
+      color = "white";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
+    r -= width;
+  }
+}
+
+function zoomOut() {
+	r = Math.sqrt(x*x+y*y)+inc%(2*width);
+	color = "black";
+  ctx.clearRect(0,0,2*y,2*x);
+  while (r > (rMax-width/2)) {
+    if (color == "white")
+      color = "black";
+    else
+      color = "white";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
+    r -= width;
+  }
+}
+
+var inc = 0;
+var int = setInterval(
+  function() {
+  	inc+=0.5;
+    zoomOut();
+    r = rMax;
+    zoomIn();
+  }, 25);
+  
+  </script>
+ </body>
+</html>

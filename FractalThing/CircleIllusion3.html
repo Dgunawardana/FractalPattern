@@ -1,0 +1,48 @@
+<html>
+ <head>
+  <title>Trippy Circle 3</title>
+ </head>
+ <body>
+  <canvas id="can" width="700px" height="700px" style="background-color:#efefef;"></canvas>
+  <script>
+var can = document.getElementById("can");
+var ctx = can.getContext('2d');
+
+var cx = can.width/2;
+var cy = can.height/2;
+var d = can.height * 3/8;
+var rad = 20;
+var n = 12;
+
+var angle = 0;
+var r = 1;
+
+var blank = 0;
+
+var int = setInterval(function(){
+  ctx.clearRect(0,0,can.width,can.height);
+  
+  ctx.beginPath();
+  ctx.moveTo(cx-5,cy);
+  ctx.lineTo(cx+5,cy);
+  ctx.moveTo(cx,cy-5);
+  ctx.lineTo(cx,cy+5);
+  ctx.stroke();
+  ctx.closePath();
+
+  ctx.fillStyle = "#FF00FF";
+
+  for(var i=0; i<n; i++){
+    if(i!=blank){
+      ctx.beginPath();
+      ctx.arc(r*d*Math.cos(angle)+cx,r*d*Math.sin(angle)+cy,rad,0,2*Math.PI);
+      ctx.fill();
+    }
+    angle += (2*Math.PI)/n;
+  }
+  blank = (blank+1)%n;
+  angle+=0.001;
+  },200);
+  </script>
+ </body>
+</html>

@@ -1,0 +1,30 @@
+<html>
+ <head>
+  <title>Trippy Square</title>
+ </head>
+ <body>
+  <canvas id="can" width="1000px" height="1000px"></canvas>
+  <script>
+var can = document.getElementById("can");
+var ctx = can.getContext('2d');
+ctx.strokeStyle = "#666666";
+var neg = -1;
+var shift = 0;
+
+for(var i=0; i<25; i++){
+  shift = Math.abs((i%(4))-2)%(4);
+	for(var e=0; e<26; e++){
+    neg*=-1;
+    if(neg == -1)
+    	ctx.fillStyle = "#000000";
+    else
+    	ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(e*40-20*shift,i*40,40,40);
+  }
+  ctx.moveTo(0,40*i);
+  ctx.lineTo(1000,40*i);
+  ctx.stroke();
+}
+  </script>
+ </body>
+</html>
